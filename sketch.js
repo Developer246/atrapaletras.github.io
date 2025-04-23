@@ -1,11 +1,18 @@
 let letras = []; // Arreglo para almacenar las letras
 let vidas = 3; // Número inicial de vidas
-let puntos = 0; // Contador de puntos
+let puntos = 0;
+let fuente; // Variable para la fuente
+
+function preload() {
+  // Carga la fuente Academy Engraved LET
+  fuente = 'Academy Engraved LET'; // Especifica el nombre de la fuente
+}
 
 function setup() {
   createCanvas(500, 500);
   textSize(32); // Tamaño del texto para las letras
   textAlign(CENTER, CENTER); // Centramos el texto
+  textFont(fuente); // Aplicamos la fuente
 }
 
 function draw() {
@@ -56,4 +63,5 @@ function draw() {
     noLoop(); // Detener el juego
   }
 }
+
 
