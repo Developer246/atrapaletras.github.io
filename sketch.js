@@ -1,52 +1,59 @@
-let letras = [];
-let vidas = 3;
-let puntos = 0;
+let letras = []; // Arreglo para almacenar las letras
+let vidas = 3; // Número inicial de vidas
+let puntos = 0; // Contador de puntos
 
 function setup() {
   createCanvas(500, 500);
-  // Configura la barra (jugador)
-
+  textSize(32); // Tamaño del texto para las letras
+  textAlign(CENTER, CENTER); // Centramos el texto
 }
 
 function draw() {
   background("black");
 
-  // Mostrar los puntos
+  // Mostrar los puntos y las vidas
   textSize(16);
-  fill(0);
-  text(`Puntos: ${puntos}`, 10, 20);
-
-  // Controlar la barra con el ratón
-  
+  fill("white");
+  text(`Puntos: ${puntos}`, 50, 20);
+  text(`Vidas: ${vidas}`, 50, 40);
 
   // Crear nuevas letras
-  if (frameCount % 30 === 0) {
-    let letra = text(random(20, width - 20), 0, 20, 20);
-    letra.velocityY = random(2, 5); // Velocidad de caída
-    letra.letra = random(['A', 'B', 'C', 'D', 'E', 'F']); // Letras aleatorias
+  if (frameCount % 60 === 0) { // Cada 60 fotogramas (~1 segundo)
+    let letra = {
+      letra: random(['A', 'B', 'C', 'D', 'E', 'F']), // Letras aleatorias
+      x: random(20, width - 20), // Posición aleatoria horizontal
+      y: 0, // Comienza en la parte superior del lienzo
+      velocidad: random(2, 5) // Velocidad de caída
+    };
     letras.push(letra);
   }
 
   // Mostrar y gestionar las letras
   for (let i = letras.length - 1; i >= 0; i--) {
     let letra = letras[i];
-    fill(0);
-    textAlign(CENTER, CENTER);
-    text(letra.letra, letra.position.x, letra.position.y); // Dibuja la letra
+    fill("white");
+    text(letra.letra, letra.x, letra.y); // Imprimir la letra con `text()`
 
-    // Detectar colisiones con la barra
-    if (letra.overlap(barra)) {
-      puntos++;
-      letra.remove(); // Eliminar letra capturada
-      letras.splice(i, 1);
-    } else if (letra.position.y > height) {
+    // Mover la letra hacia abajo
+    letra.y += letra.velocidad;
+
+    // Detectar si el jugador hace clic en la letra
+    if (mouseIsPressed && dist(mouseX, mouseY, letra.x, letra.y) < 16) {
+      puntos++; // Incrementar puntos
+      letras.splice(i, 1); // Eliminar letra capturada
+    } else if (letra.y > height) {
       // Si la letra cae fuera del lienzo
-      letra.remove();
-      letras.splice(i, 1);
+      vidas--;
+      letras.splice(i, 1); // Eliminar letra caída
     }
   }
 
-  // Dibujar los sprites
-  drawSprites();
+  // Fin del juego si las vidas llegan a 0
+  if (vidas <= 0) {
+    textSize(32);
+    fill("red");
+    text("¡Game Over!", width / 2, height / 2);
+    noLoop(); // Detener el juego
+  }
 }
 
