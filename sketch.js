@@ -1,15 +1,15 @@
 let letras = [];
-let barra;
+let vidas = 3;
 let puntos = 0;
 
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(500, 500);
   // Configura la barra (jugador)
   barra = createSprite(width / 2, height - 20, 80, 10);
 }
 
 function draw() {
-  background(220);
+  background("black");
 
   // Mostrar los puntos
   textSize(16);
