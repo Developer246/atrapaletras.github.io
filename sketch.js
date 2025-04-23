@@ -5,7 +5,7 @@ let puntos = 0;
 function setup() {
   createCanvas(500, 500);
   // Configura la barra (jugador)
-  barra = createSprite(width / 2, height - 20, 80, 10);
+
 }
 
 function draw() {
@@ -17,11 +17,11 @@ function draw() {
   text(`Puntos: ${puntos}`, 10, 20);
 
   // Controlar la barra con el ratón
-  barra.position.x = constrain(mouseX, barra.width / 2, width - barra.width / 2);
+  
 
   // Crear nuevas letras
   if (frameCount % 30 === 0) {
-    let letra = createSprite(random(20, width - 20), 0, 20, 20);
+    let letra = text(random(20, width - 20), 0, 20, 20);
     letra.velocityY = random(2, 5); // Velocidad de caída
     letra.letra = random(['A', 'B', 'C', 'D', 'E', 'F']); // Letras aleatorias
     letras.push(letra);
